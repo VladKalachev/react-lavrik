@@ -1,11 +1,15 @@
 import React from 'react';
-import CoutnterClass from './counters/class';
+import CounterClass from './counters/class';
+import CounterFuntion from './counters/function';
 
-export default function(props) {
- 
+export default function() {
+
     return(
         <div>
-            <CoutnterClass />
+            <h1>Counter as class</h1>
+            <CounterClass />
+            <h1>Counter as funtion</h1>
+            <CounterFuntion />
         </div>
     )
 };
