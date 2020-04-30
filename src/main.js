@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import App from './app';
 
-let hr = React.createElement('hr');
-let div = React.createElement('div', {className: 'lol'}, [hr])
-ReactDom.render(div, document.querySelector("#app"));
+ReactDom.render(
+    <App />
+, document.querySelector("#app"));
