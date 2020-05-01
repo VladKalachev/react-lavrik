@@ -1,15 +1,11 @@
 import React from 'react';
-import CounterClass from './counters/class';
-import CounterFuntion from './counters/function';
+import HW1 from './hw/1-simple';
 
 export default function() {
-
     return(
         <div>
-            <h1>Counter as class</h1>
-            <CounterClass />
-            <h1>Counter as funtion</h1>
-            <CounterFuntion />
+            <h2>Min max simple</h2>
+            <HW1 />
         </div>
     )
 };
