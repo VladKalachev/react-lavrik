@@ -12,20 +12,17 @@ export default class extends React.Component {
     };
 
     increase = () => {
-        let cnt = this.state.cnt + 1;
-        if(cnt > this.props.max) {
-            cnt = this.props.max;
-        }
-        this.setState({ cnt })
+        this.set(this.state.cnt + 1);
     };
 
     decrease = () => {
-        let cnt = this.state.cnt - 1;
-        if(cnt < this.props.min) {
-            cnt = this.props.min;
-        }
-        this.setState({ cnt })
+        this.set(this.state.cnt - 1);
     };
+
+    set(newCnt){
+        let cnt = Math.min(Math.max(newCnt, this.props.min), this.props.max);
+        this.setState({ cnt })
+    }
 
     render(){
         return(
