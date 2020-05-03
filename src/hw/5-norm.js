@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * Однонаправленный поток данных
  * params:
  *  min: int
  *  max: int
@@ -55,8 +56,6 @@ export default class extends React.Component {
     render(){
         return(
             <div>
-                {this.state.cnt}<br/>
-                {this.state.inputValue}<br/>
                 <button onClick={this.decrease}> - </button>
                 <input value={this.state.inputValue} 
                         onChange={(e) => this.setValue(e.target.value)}

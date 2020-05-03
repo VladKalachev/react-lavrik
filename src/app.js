@@ -1,9 +1,5 @@
 import React from 'react';
-import HW1 from './hw/1-simple';
-import HW2 from './hw/2-input';
-import HW3 from './hw/3-lazy';
-import Derived from './hw/4-deriveds';
-import HW4 from './hw/5-norm';
+import AppMinMax from './hw/5-norm';
 
 export default class extends React.Component {
 
@@ -32,7 +28,9 @@ export default class extends React.Component {
                 <tr key={product.id}>
                     <td>{product.title}</td>
                     <td>{product.price}</td>
-                    <td>Count</td>
+                    <td>
+                        <AppMinMax min={1} max={product.rest} cnt={product.currnet} />
+                    </td>
                     <td>{product.price * product.currnet}</td>
                </tr>
             )
