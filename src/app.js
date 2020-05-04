@@ -1,5 +1,5 @@
 import React from 'react';
-import AppMinMax from './hw/5-norm';
+import AppMinMax from './inputs/minmax/minmax';
 
 export default class extends React.Component {
 
@@ -22,6 +22,11 @@ export default class extends React.Component {
 
     sendForm = () => {
         this.setState({formDone: true});
+    }
+
+    unrealChange = () => {
+        let products = [...this.state.products]
+        this.setState({})
     }
 
     render(){
@@ -57,6 +62,10 @@ export default class extends React.Component {
         return(
             <div>
                 {page}
+                <hr/>
+                <button onClick={() => this.changeCnt(1, 4)} >
+                    Unreal chenge cnt
+                </button>
             </div>
         ) 
     }
