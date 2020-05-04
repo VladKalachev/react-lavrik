@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import AppLazyInput from '../lazy/lazy.js';
 /**
  * Однонаправленный поток данных
  * params:
@@ -20,16 +21,6 @@ export default class extends React.Component {
         onChange: PropTypes.func
     }
 
-    componentDidUpdate(prevProps, prevState){
-        if(prevProps.cnt !== this.props.cnt){
-            this.setState({inputValue: this.props.cnt})
-        }
-    }
-
-    state = {
-        inputValue: this.props.min
-    };
-
     increase = () => {
         this.set(this.props.cnt + 1);
     };
@@ -40,39 +31,21 @@ export default class extends React.Component {
 
     set(newCnt){
         let cnt = Math.min(Math.max(newCnt, this.props.min), this.props.max);
-        this.setState({
-            inputValue: cnt
-        })
-
-        // как-то сказать родителю что обновлся
         this.props.onChange(cnt);
     }
 
-    setValue(newStr){
-        this.setState({
-            inputValue: newStr
-        });
-    }
-
-    applayValue = () => {
-        let cnt = parseInt(this.state.inputValue);
+    onChange = (e) => {
+        let cnt = parseInt(e.target.value);
         this.set(isNaN(cnt) ? this.props.min : cnt);
-    }
-
-    checkEnterKey = (e) => {
-        if(e.keyCode === 13){
-            this.applayValue();
-        }
     }
 
     render(){
         return(
             <div>
                 <button onClick={this.decrease}> - </button>
-                <input value={this.state.inputValue} 
-                        onChange={(e) => this.setValue(e.target.value)}
-                        onBlur={this.applayValue}
-                        onKeyUp={this.checkEnterKey}
+                <AppLazyInput 
+                    value={this.props.cnt}
+                    onChange={this.onChange}
                 />
                 <button onClick={this.increase}> + </button>
             </div>
