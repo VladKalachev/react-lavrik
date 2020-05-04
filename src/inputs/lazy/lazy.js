@@ -1,81 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * Однонаправленный поток данных
- * params:
- *  min: int
- *  max: int
- */
 export default class extends React.Component {
 
     static defaultProps = {
-        onChange: function() {}
+        onChange: function(e) {},
+        netiveProps: {}
     }
 
     static propTypes = {
-        min: PropTypes.number.isRequired,
-        max: PropTypes.number.isRequired,
-        cnt: PropTypes.number.isRequired,
-        onChange: PropTypes.func
+        value: PropTypes.any.isRequired,
+        onChange: PropTypes.func,
+        netiveProps: PropTypes.object
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(prevProps.cnt !== this.props.cnt){
-            this.setState({inputValue: this.props.cnt})
+        let inp = this.nativeInput.current;
+        if(prevProps.value !== this.props.value){
+            inp.value = this.props.value;
         }
     }
 
-    state = {
-        inputValue: this.props.min
-    };
+    nativeInput = React.createRef();
 
-    increase = () => {
-        this.set(this.props.cnt + 1);
-    };
-
-    decrease = () => {
-        this.set(this.props.cnt - 1);
-    };
-
-    set(newCnt){
-        let cnt = Math.min(Math.max(newCnt, this.props.min), this.props.max);
-        this.setState({
-            inputValue: cnt
-        })
-
-        // как-то сказать родителю что обновлся
-        this.props.onChange(cnt);
-    }
-
-    setValue(newStr){
-        this.setState({
-            inputValue: newStr
-        });
-    }
-
-    applayValue = () => {
-        let cnt = parseInt(this.state.inputValue);
-        this.set(isNaN(cnt) ? this.props.min : cnt);
+    checkChange = (e) => {
+        if(this.props.value.toString() !== e.target.value) {
+            this.props.onChange(e);
+        }
     }
 
     checkEnterKey = (e) => {
         if(e.keyCode === 13){
-            this.applayValue();
+            this.checkChange(e);
         }
     }
 
     render(){
         return(
-            <div>
-                <button onClick={this.decrease}> - </button>
-                <input value={this.state.inputValue} 
-                        onChange={(e) => this.setValue(e.target.value)}
-                        onBlur={this.applayValue}
-                        onKeyUp={this.checkEnterKey}
-                />
-                <button onClick={this.increase}> + </button>
-            </div>
+            <input {...this.props.netiveProps}
+                    defaultValue={this.props.value}
+                    onBlur={this.checkChange}
+                    onKeyUp={this.checkEnterKey}
+                    ref={this.nativeInput}
+            />
         )
     }
 };
