@@ -21,6 +21,16 @@ export default class extends React.Component {
             }
         ]
     }
+
+    changeCnt = (i, cnt) => {
+        // по смыслу this.state.products[i].current = cnt; 
+        let newProducts = [...this.state.products];
+        let newProduct = {...newProducts[i]};
+        newProduct.currnet = cnt;
+        newProducts[i] = newProduct;
+        this.setState({products: newProducts});
+    }
+
     render(){
 
         let productsRows = this.state.products.map((product, i) => {
@@ -29,7 +39,10 @@ export default class extends React.Component {
                     <td>{product.title}</td>
                     <td>{product.price}</td>
                     <td>
-                        <AppMinMax min={1} max={product.rest} cnt={product.currnet} />
+                        <AppMinMax min={1} 
+                                   max={product.rest} 
+                                   cnt={product.currnet}
+                                   onChange={(cnt) => this.changeCnt(i, cnt)} />
                     </td>
                     <td>{product.price * product.currnet}</td>
                </tr>

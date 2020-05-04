@@ -9,10 +9,15 @@ import PropTypes from 'prop-types';
  */
 export default class extends React.Component {
 
+    static defaultProps = {
+        onChange: function() {}
+    }
+
     static propTypes = {
         min: PropTypes.number.isRequired,
         max: PropTypes.number.isRequired,
-        cnt: PropTypes.number.isRequired
+        cnt: PropTypes.number.isRequired,
+        onChange: PropTypes.func
     }
 
     state = {
@@ -20,11 +25,11 @@ export default class extends React.Component {
     };
 
     increase = () => {
-        this.set(this.state.cnt + 1);
+        this.set(this.props.cnt + 1);
     };
 
     decrease = () => {
-        this.set(this.state.cnt - 1);
+        this.set(this.props.cnt - 1);
     };
 
     set(newCnt){
@@ -34,6 +39,7 @@ export default class extends React.Component {
         })
 
         // как-то сказать родителю что обновлся
+        this.props.onChange(cnt);
     }
 
     setValue(newStr){
