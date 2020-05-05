@@ -66,7 +66,12 @@ export default class extends React.Component {
                 />
                 break;
             case 'ORDER':
-                page = <Order />
+                page = <Order 
+                    formData={this.state.formData}
+                    onChange={() => {}}
+                    onSend={this.moveToResult}
+                    onBack={this.moveToCart}
+                />
                 break;
             case 'RESULT':
                 page = <Result />

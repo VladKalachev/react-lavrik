@@ -58,7 +58,11 @@ export default class extends React.Component {
                 </table>
                 <h3>Total: {total}</h3>
                 <hr/>
-                <button onClick={this.props.onSend}>Send</button>
+                <button className="btn btn-primary"
+                        onClick={this.props.onSend}
+                >
+                    Send
+                </button>
             </React.Fragment>
         )
     }
