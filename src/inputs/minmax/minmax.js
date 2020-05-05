@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppLazyInput from '../lazy/lazy.js';
-import styles from './minmax.css';
+import styles from './minmax.module.css';
 export default class extends React.Component {
 
     static defaultProps = {

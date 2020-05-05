@@ -61,7 +61,7 @@ export default class extends React.Component {
                     showForm(productsRows, total, this.sendForm):
                     showCongrats();
         return(
-            <div>
+            <div className="container">
                 {page}
                 <hr/>
                 <Button variant="primary" 
@@ -77,7 +77,7 @@ function showForm(productsRows, total, onSend) {
     return(
         <React.Fragment>
             <h2>Cars</h2>
-                <table>
+                <table className="table table-bordered">
                     <thead>
                         <tr>
                             <td>Title</td>
