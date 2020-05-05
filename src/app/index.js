@@ -1,73 +1,88 @@
 import React from 'react';
-import AppMinMax from './inputs/minmax/minmax';
-import { Button } from 'react-bootstrap';
+import Order from '~/order';
+import Cart from '~/cart';
+import Result from '~/redult';
+
+import styles from './app.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 export default class extends React.Component {
 
     state = {
         products: getProducts(),
-        formDone: false
+        formData: {
+            name: { 
+                label: 'Your Name',
+                value: ''
+            },
+            email: {
+                label: 'Email',
+                value: ''
+            },
+            phone: {
+                label: 'Phone',
+                value: ''
+            }
+        },
+        activeRoute: 'CART'
     }
 
-    changeCnt(i, cnt) {
+    changeCnt = (i, cnt) =>{
         let products = [...this.state.products];
         products[i] = {...products[i], current: cnt };
         this.setState({products});
     }
 
-    remove(i){
+    remove = (i) => {
         let products = [...this.state.products]
         products.splice(i, 1);
         this.setState({products});
     }
 
-    sendForm = () => {
-        this.setState({formDone: true});
+    moveToCart = () => {
+        this.setState({activeRoute: 'CART'});
     }
 
-    unrealChange = () => {
-        let products = [...this.state.products]
-        this.setState({})
+    moveToOrder = () => {
+        this.setState({activeRoute: 'ORDER'});
+    }
+
+    moveToResult = () => {
+        this.setState({activeRoute: 'RESULT'});
     }
 
     render(){
-        let total = this.state.products.reduce((t, pr) => {
-            return t + (pr.current * pr.price)
-        }, 0);
+      
 
-        let productsRows = this.state.products.map((product, i) => {
-          
-            return(
-                <tr key={product.id}>
-                    <td>{product.title}</td>
-                    <td>{product.price}</td>
-                    <td>
-                        <AppMinMax min={1} 
-                                   max={product.rest} 
-                                   cnt={product.current}
-                                   onChange={(cnt) => this.changeCnt(i, cnt)} />
-                    </td>
-                    <td>{product.price * product.current}</td>
-                    <td>
-                        <button onClick={() => this.remove(i)}>
-                            X
-                        </button>
-                    </td>
-               </tr>
-            )
-        });
+        let page;
 
-        let page = !this.state.formDone ? 
-                    showForm(productsRows, total, this.sendForm):
-                    showCongrats();
+        switch(this.state.activeRoute){
+            case 'CART':
+                page = <Cart 
+                    products={this.state.products}
+                    onChange={this.changeCnt}
+                    onRemove={this.remove}
+                    onSend={this.moveToOrder}
+                />
+                break;
+            case 'ORDER':
+                page = <Order />
+                break;
+            case 'RESULT':
+                page = <Result />
+                break;
+            default:
+                page = <div>404</div>
+        }
+
         return(
             <div className="container">
                 {page}
-                <hr/>
+                {/* <hr/>
                 <Button variant="primary" 
                         onClick={() => this.changeCnt(1, 4)} >
                     Unreal chenge cnt
-                </Button>
+                </Button> */}
             </div>
         ) 
     }
