@@ -1,6 +1,7 @@
 import React from 'react';
 import AppMinMax from './inputs/minmax/minmax';
-
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 export default class extends React.Component {
 
     state = {
@@ -63,9 +64,10 @@ export default class extends React.Component {
             <div>
                 {page}
                 <hr/>
-                <button onClick={() => this.changeCnt(1, 4)} >
+                <Button variant="primary" 
+                        onClick={() => this.changeCnt(1, 4)} >
                     Unreal chenge cnt
-                </button>
+                </Button>
             </div>
         ) 
     }

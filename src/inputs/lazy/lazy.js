@@ -16,7 +16,9 @@ export default class extends React.Component {
 
     componentDidUpdate(prevProps, prevState){
         let inp = this.nativeInput.current;
-        if(prevProps.value !== this.props.value){
+        if(prevProps.value !== this.props.value || 
+             this.props.value != inp.value 
+        ){
             inp.value = this.props.value;
         }
     }
