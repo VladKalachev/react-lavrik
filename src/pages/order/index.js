@@ -2,9 +2,10 @@ import React from 'react';
 import {Form, Button, Modal} from 'react-bootstrap';
 import orderModal from '~s/order';
 import {observer} from 'mobx-react';
-import routesMap from '~/routes/routesMap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Link} from 'react-router-dom';
+import routesMap from '~/routes/routesMap';
 @observer class Order extends React.Component {
     state = {
         showModal: false
@@ -20,11 +21,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
     confirm = () => {
         this.hide();
-        
+        this.props.history.push(routesMap.result);
     }
     
     render() {
-        // console.log(routesMap);
+        
         let formFields = [];
         for(let name in orderModal.formData){
             let field = orderModal.formData[name];
@@ -50,9 +51,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                  <Form>
                      {formFields}
                  </Form>
-                 <Button variant="warning" onClick={() => router.moveTo('cart')}>
+                 <Link className="btn btn-warning" to={routesMap.home}>
                      Back to Cart
-                 </Button>
+                 </Link>
                  &nbsp;
                  <Button variant="primary" onClick={this.show} disabled={!orderModal.formValid}>
                      Applay Order
