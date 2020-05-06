@@ -16,6 +16,8 @@ export default class extends React.Component {
         onChange: PropTypes.func
     }
 
+    lazyInput = React.createRef();
+
     increase = () => {
         this.set(this.props.cnt + 1);
     };
@@ -27,11 +29,15 @@ export default class extends React.Component {
     set(newCnt){
         let cnt = Math.min(Math.max(newCnt, this.props.min), this.props.max);
         this.props.onChange(cnt);
+        return cnt;
     }
 
     onChange = (e) => {
         let cnt = parseInt(e.target.value);
-        this.set(isNaN(cnt) ? this.props.min : cnt);
+        let reaclCnt = this.set(isNaN(cnt) ? this.props.min : cnt);
+        if(reaclCnt.toString() !== e.target.value){
+            this.lazyInput.current.setValue(reaclCnt);
+        }
     }
 
     render(){
@@ -42,6 +48,7 @@ export default class extends React.Component {
                     netiveProps={{ type: 'text', className: styles.input }}
                     value={this.props.cnt}
                     onChange={this.onChange}
+                    ref={this.lazyInput}
                 />
                 <button onClick={this.increase}> + </button>
             </div>

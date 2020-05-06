@@ -14,16 +14,11 @@ export default class extends React.Component {
         netiveProps: PropTypes.object
     }
 
-    componentDidUpdate(prevProps, prevState){
-        let inp = this.nativeInput.current;
-        if(prevProps.value !== this.props.value || 
-             this.props.value != inp.value 
-        ){
-            inp.value = this.props.value;
-        }
-    }
-
     nativeInput = React.createRef();
+
+    setValue = (value) => {
+        this.nativeInput.current.value = value;
+    }
 
     checkChange = (e) => {
         if(this.props.value.toString() !== e.target.value) {
