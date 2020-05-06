@@ -8,7 +8,7 @@ routes.forEach((route) => {
     }
 });
 
-let routeBuilder = function(name, params) {
+let urlBuilder = function(name, params) {
     if(!routesMap.hasOwnProperty(name)){
         return null;
     }
@@ -22,4 +22,4 @@ let routeBuilder = function(name, params) {
 }
 
 export default routesMap;
-export { routeBuilder };
+export { urlBuilder };
