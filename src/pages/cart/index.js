@@ -1,15 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import rr from '../../routes';
 import AppMinMax from '~c/inputs/minmax';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 import cartModal from '~s/cart';
-import router from '~s/router';
 import {observer} from 'mobx-react';
-export default @observer class extends React.Component {
-    
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Link} from 'react-router-dom';
+import routesMap from '~/routes/routesMap';
+
+
+@observer class Cart extends React.Component {
+     
     render() {
-       
+  
         let productsRows = cartModal.products.map((product, i) => {
           
             return(
@@ -20,7 +22,7 @@ export default @observer class extends React.Component {
                         <AppMinMax min={1} 
                                    max={product.rest} 
                                    cnt={product.current}
-                                   onChange={(cnt) => cartModal.change(i, cnt)} />
+                                   onChange={cartModal.changeOn[i]} />
                     </td>
                     <td>{product.price * product.current}</td>
                     <td>
@@ -51,12 +53,12 @@ export default @observer class extends React.Component {
                 </table>
                 <h3>Total: {cartModal.total}</h3>
                 <hr/>
-                <button className="btn btn-primary"
-                        onClick={() => router.moveTo('order')}
-                >
+                <Link to={routesMap.order} className="btn btn-primary">
                     Send
-                </button>
+                </Link>
             </React.Fragment>
         )
     }
 };
+
+export default Cart;

@@ -1,11 +1,11 @@
-import {observable, action } from 'mobx';
+import {observable, computed, action } from 'mobx';
 
 class Order {
     @observable formData = {
         name: { 
             label: 'Your Name',
             value: '',
-            validator: val => /^[aZ-zZ]{2,}$/.test(val),
+            validator: val => /^[aA-zZ]{2,}$/.test(val),
             errorText: 'Латинские символы, не менее двух',
             valid: null
         },
@@ -24,6 +24,18 @@ class Order {
             valid: null
         }
     };
+
+    @computed get formValid(){
+        return Object.values(this.formData).every(field => field.valid);
+    } 
+
+    @computed get data(){
+        let data = {};
+        for(let name in this.formData){
+            data[name] = this.formData[name].value;
+        }
+        return data;
+    }
 
     @action change(key, value){
         let field = this.formData[key];

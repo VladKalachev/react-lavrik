@@ -7,6 +7,13 @@ class Cart {
         return this.products.reduce((t, pr) => t + pr.price * pr.current, 0);
     }
 
+    // мемоизация
+    @computed get changeOn() {
+        return this.products.map((product, i) => {
+            return (cnt) => this.change(i, cnt);
+        })
+    }
+
     @action change(i, cnt){
         this.products[i].current = cnt;
     }
