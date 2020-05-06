@@ -1,15 +1,17 @@
-class Cart {
-    products = getProducts();
+import {observable, computed, action } from 'mobx';
 
-    get total() {
+class Cart {
+    @observable products = getProducts();
+
+    @computed get total() {
         return this.products.reduce((t, pr) => t + pr.price * pr.current, 0);
     }
 
-    change(i, cnt){
+    @action change(i, cnt){
         this.products[i].current = cnt;
     }
 
-    remove(i){
+    @action remove(i){
         this.products.splice(i, 1);
     }
 }

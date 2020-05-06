@@ -5,10 +5,10 @@ import Result from '~p/result';
 
 import styles from './app.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import {observer} from 'mobx-react';
 import router from '~s/router';
 
-export default class extends React.Component {
+@observer class App extends React.Component {
 
     // state = {
     //     formData: {
@@ -44,3 +44,5 @@ export default class extends React.Component {
         ) 
     }
 };
+
+export default App;

@@ -24,7 +24,8 @@ let conf = {
                 presets: ['@babel/preset-env'],
                 plugins: [
                   "@babel/plugin-transform-react-jsx",
-                  "@babel/plugin-proposal-class-properties"
+                  ["@babel/plugin-proposal-decorators", { "legacy": true }],
+                  ["@babel/plugin-proposal-class-properties", { "loose": true }]
                 ]
               }
             }

@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import cartModal from '~s/cart';
 import router from '~s/router';
-
-export default class extends React.Component {
+import {observer} from 'mobx-react';
+export default @observer class extends React.Component {
     
     render() {
        
