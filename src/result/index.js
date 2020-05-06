@@ -5,8 +5,9 @@ export default class extends React.Component {
 
     render() {
         return(
-            <div className="container">
-                Result
+            <div>
+                <h2>Congratulations!</h2>
+                <p>112</p>
             </div>
         ) 
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Order from '~/order';
 import Cart from '~/cart';
-import Result from '~/redult';
+import Result from '~/result';
 
 import styles from './app.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,6 +33,12 @@ export default class extends React.Component {
         this.setState({products});
     }
 
+    changeFormData = (name, value) => {
+        let formData = {...this.state.formData};
+        formData[name] = {...formData[name], value};
+        this.setState({formData});
+    }
+
     remove = (i) => {
         let products = [...this.state.products]
         products.splice(i, 1);
@@ -52,8 +58,7 @@ export default class extends React.Component {
     }
 
     render(){
-      
-
+    
         let page;
 
         switch(this.state.activeRoute){
@@ -68,7 +73,7 @@ export default class extends React.Component {
             case 'ORDER':
                 page = <Order 
                     formData={this.state.formData}
-                    onChange={() => {}}
+                    onChange={this.changeFormData}
                     onSend={this.moveToResult}
                     onBack={this.moveToCart}
                 />
