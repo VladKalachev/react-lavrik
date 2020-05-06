@@ -1,16 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Form, Button, Modal} from 'react-bootstrap';
+import orderModal from '~s/order';
+import router from '~s/router';
+import {observer} from 'mobx-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default class extends React.Component {
-    static propTypes = {
-        formData: PropTypes.object.isRequired,
-        onChange: PropTypes.func.isRequired,
-        onBack: PropTypes.func.isRequired,
-        onSend: PropTypes.func.isRequired
-    }
-
+@observer class Order extends React.Component {
     state = {
         showModal: false
     }
@@ -25,19 +20,24 @@ export default class extends React.Component {
 
     confirm = () => {
         this.hide();
-        this.props.onSend();
+        router.moveTo('result');
     }
     
     render() {
         let formFields = [];
-        for(let name in this.props.formData){
-            let field = this.props.formData[name];
+        for(let name in orderModal.formData){
+            let field = orderModal.formData[name];
             formFields.push(
                 <Form.Group key={name} controlId={'order-form-' + name}>
                     <Form.Label>{field.label}</Form.Label>
                     <Form.Control type="text"
                                   value={field.value}
-                                  onChange={(e) => this.props.onChange(name, e.target.value) }/>
+                                  onChange={(e) => orderModal.change(name, e.target.value) }/>
+                    {field.valid === null || field.valid ? '' : (
+                        <Form.Text className='text-muted' >
+                            {field.errorText}
+                        </Form.Text>
+                    )}
                 </Form.Group>
             );
         }
@@ -49,7 +49,7 @@ export default class extends React.Component {
                  <Form>
                      {formFields}
                  </Form>
-                 <Button variant="warning" onClick={this.props.onBack}>
+                 <Button variant="warning" onClick={() => router.moveTo('cart')}>
                      Back to Cart
                  </Button>
                  &nbsp;
@@ -57,7 +57,10 @@ export default class extends React.Component {
                      Applay Order
                  </Button>
 
-                 <Modal show={this.state.showModal} backdrop="static">
+                 <Modal show={this.state.showModal} 
+                        backdrop="static"
+                        onHide={this.hide}
+                >
                     <Modal.Header closeButton>
                     <Modal.Title>Check information</Modal.Title>
                     </Modal.Header>
@@ -77,3 +80,5 @@ export default class extends React.Component {
         ) 
     }
 };
+
+export default Order;
