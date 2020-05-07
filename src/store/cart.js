@@ -44,7 +44,12 @@ export default class Cart {
     }
 
     @action add(id) {
-        this.products.push({id, cnt: 1});
+        this.api.add(this.token, id).then((res) => {
+            if(res){
+                this.products.push({id, cnt: 1});
+            }
+        });
+       
     }
 
     @action change(id, cnt) {
@@ -57,7 +62,11 @@ export default class Cart {
     @action remove(id) {
         let index = this.products.findIndex((pr) => pr.id === id );
         if(index !== -1 ){
-            this.products.splice(index, 1);
+            this.api.remove(this.token, id).then((res) => {
+                if(res){
+                    this.products.splice(index, 1);
+                }
+            })
         }
     }
 };

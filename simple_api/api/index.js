@@ -2,6 +2,8 @@ let router = require("express").Router();
 let mocks = require("./mock");
 let mocksCart = require("./cart-mock");
 
+let cart = [];
+
 const reply = (res, body, timeout = 1000, status = 200) =>
   setTimeout(() => {
     res.status(status).json(body);
@@ -48,10 +50,14 @@ router.get("/cart/load", function(req, res, next) {
 });
 
 // post
-router.post("/cart/add", function(req, res, next) {
-  //const []
-  //reply(res, mocksCart.cart);
-  res.send('Post to cart')
+router.get("/cart/add", function(req, res, next) {
+ 
+  console.log(req.query.id);
+  if(req.query.token && req.query.id){
+    cart.push({id: req.query.id, cnt: 1})
+    res.send(true);
+  }
+  
 });
 
 // puth
@@ -60,8 +66,12 @@ router.put("/cart/change", function(req, res, next) {
 });
 
 // delete
-router.delete("/cart/clean", function(req, res, next) {
-  res.send('clean to cart')
+router.get("/cart/remove", function(req, res, next) {
+  
+  if(req.query.token && req.query.id){
+    cart.filter((res) => res.id !== req.query.id);
+    res.send(true);
+  }
 });
 
 
