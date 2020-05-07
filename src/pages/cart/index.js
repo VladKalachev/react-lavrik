@@ -1,11 +1,12 @@
 import React from 'react';
 import AppMinMax from '~c/inputs/minmax';
-import {observer, inject} from 'mobx-react';
+import withStore from '~/hocs/withStore';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from 'react-router-dom';
 import routesMap from '~/routes/routesMap';
+import LinkButton from '~c/links/button';
 
-@inject('stores') @observer class Cart extends React.Component {
+class Cart extends React.Component {
      
     render() {
         let cartModal = this.props.stores.cart;
@@ -50,12 +51,12 @@ import routesMap from '~/routes/routesMap';
                 </table>
                 <h3>Total: {cartModal.total}</h3>
                 <hr/>
-                <Link to={routesMap.order} className="btn btn-primary">
+                <LinkButton to={routesMap.order} className="btn btn-primary">
                     Send
-                </Link>
+                </LinkButton>
             </React.Fragment>
         )
     }
 };
 
-export default Cart;
+export default withStore(Cart);
