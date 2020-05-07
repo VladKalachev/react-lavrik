@@ -1,15 +1,14 @@
 import React from 'react';
 import AppMinMax from '~c/inputs/minmax';
-import cartModal from '~s/cart';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from 'react-router-dom';
 import routesMap from '~/routes/routesMap';
 
-@observer class Cart extends React.Component {
+@inject('stores') @observer class Cart extends React.Component {
      
     render() {
-  
+        let cartModal = this.props.stores.cart;
         let productsRows = cartModal.productsDetailed.map((product, i) => {
           
             return(

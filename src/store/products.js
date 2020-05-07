@@ -1,7 +1,11 @@
 import {observable, computed, action } from 'mobx';
 
-class Products {
+export default class Products {
     @observable items = getProducts();
+
+    constructor(rootStore){
+        this.rootSote = rootStore;
+    }
 
     @computed get productsMap(){
         let map = {};
@@ -22,10 +26,7 @@ class Products {
         }
         return  this.items[index];
     }
-}
-
-export default new Products();
-
+};
 // server api
 function getProducts(){
     return [

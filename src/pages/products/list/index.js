@@ -1,14 +1,14 @@
 import React from 'react';
-import productModel from '~s/products';
 import {Card, Button} from 'react-bootstrap';
 import {urlBuilder} from '~/routes/routesMap';
 import {Link} from 'react-router-dom';
 import styles from './index.module.css';
-import cart from '~s/cart';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 
-export default observer(function(props) {
-
+export default inject('stores')(observer(function(props) {
+    
+    let productModel = props.stores.products;
+    let cart = props.stores.cart;
     let productsCart = productModel.items.map((product) => {
         let btn;
 
@@ -48,4 +48,4 @@ export default observer(function(props) {
             </div>
         </div>
     )   
-})
+}))

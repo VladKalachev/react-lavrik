@@ -1,6 +1,6 @@
 import {observable, computed, action } from 'mobx';
 
-class Order {
+export default class Order {
     @observable formData = {
         name: { 
             label: 'Your Name',
@@ -25,6 +25,10 @@ class Order {
         }
     };
 
+    constructor(rootStore){
+        this.rootSote = rootStore;
+    }
+
     @computed get formValid(){
         return Object.values(this.formData).every(field => field.valid);
     } 
@@ -43,6 +47,4 @@ class Order {
         field.valid = field.validator(field.value);
     }
 
-}
-
-export default new Order();
+};

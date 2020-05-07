@@ -1,20 +1,22 @@
 import React from 'react';
-import {useParams, Link} from 'react-router-dom';
-import productModel from '~s/products';
+import E404 from '~c/errors/404';
+import {useParams} from 'react-router-dom';
 import routesMap from '~/routes/routesMap';
+import ProductItem from '~c/products/item';
+import {inject, observer} from 'mobx-react';
 
-export default function(props) {
+export default inject('stores')(observer(function(props) {
     let {id} = useParams();
+    let productModel = props.stores.products;
     let product = productModel.getById(id);
     
-    return (
-        <div>
-            <h2>{product.title}</h2>
-            <hr/>
-            <div>
-                <strong>Prica: {product.price}</strong>
-            </div>
-            <Link to={routesMap.home} >back to list</Link>
-        </div>
-    )
-}
+    if(product === null){
+        return <E404 />
+    } else {
+        return <ProductItem 
+                    title={product.title} 
+                    price={product.price} 
+                    backUrl={routesMap.home}
+                />
+    }
+}))
