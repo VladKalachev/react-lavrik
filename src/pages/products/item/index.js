@@ -9,7 +9,8 @@ export default inject('stores')(observer(function(props) {
     let {id} = useParams();
     let productModel = props.stores.products;
     let product = productModel.getById(id);
-    
+    let cart = props.stores.cart;
+
     if(product === null){
         return <E404 />
     } else {
@@ -17,6 +18,9 @@ export default inject('stores')(observer(function(props) {
                     title={product.title} 
                     price={product.price} 
                     backUrl={routesMap.home}
+                    inCart={cart.inCart(product.id)}
+                    onAdd={() => cart.add(product.id)}
+                    onRemove={() => cart.remove(product.id)}
                 />
     }
 }))
