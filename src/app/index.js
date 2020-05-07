@@ -2,9 +2,10 @@ import React from 'react';
 import Order from '~p/order';
 import Cart from '~p/cart';
 import Result from '~p/result';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 // import styles from './app.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import routesMap from '~/routes/routesMap';
 import {observer} from 'mobx-react';
 import routes from '~/routes';
 
@@ -23,9 +24,29 @@ import routes from '~/routes';
         return(
             <Router>
                 <div className="container">
-                    <Switch>
-                        {routesComponents}
-                    </Switch>
+                    header
+                    <hr />
+                    <div className="row">
+                        <div className="col col-3">
+                            <ul className="list-group">
+                                <li className="list-group-item">
+                                    <Link to={routesMap.home}>Home</Link>
+                                </li>
+                                <li className="list-group-item">
+                                    <Link to={routesMap.cart}>Cart</Link>
+                                </li>
+                                <li className="list-group-item">
+                                    <Link to={routesMap.order}>Order now</Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="col col-9">
+                            <Switch>
+                                {routesComponents}
+                            </Switch>
+                        </div>
+                    </div>
+                   
                 </div>
             </Router>
         ) 

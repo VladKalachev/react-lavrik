@@ -46,6 +46,12 @@ function getProducts(){
             title: 'Huavey 300',
             price: 32000,
             rest: 10
+        },
+        {
+            id: 102,
+            title: 'Nokia 3110',
+            price: 32000,
+            rest: 10
         }
     ]
 } 
