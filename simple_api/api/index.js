@@ -13,7 +13,7 @@ router.get("/restaurants", function(req, res, next) {
 /**
  * Get all products
  */
-router.get("/products", function(req, res, next) {
+router.get("/products/all", function(req, res, next) {
   reply(res, mocks.products);
 });
 

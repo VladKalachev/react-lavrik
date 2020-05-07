@@ -74,7 +74,14 @@ let conf = {
         }
       },
       devServer: { 
-        historyApiFallback: true
+        historyApiFallback: true,
+        proxy: {
+          '/api/**': {
+            target: "http://localhost:3001",
+            secure: false,
+            changeOrigin: true
+          }
+        }
       }
 };
 

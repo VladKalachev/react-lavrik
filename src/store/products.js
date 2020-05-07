@@ -1,10 +1,11 @@
 import {observable, computed, action } from 'mobx';
 
 export default class Products {
-    @observable items = getProducts();
+    @observable items = [];
 
     constructor(rootStore){
         this.rootSote = rootStore;
+        this.api = this.rootSote.api.products;
     }
 
     @computed get productsMap(){
@@ -18,6 +19,13 @@ export default class Products {
         // {'100': 0, '101': 1, }
     }
 
+    @action load(){
+        console.log(this.api)
+        this.api.all().then((data) => {
+            this.items = data;
+        });
+    }
+
     getById(id){
         let index = this.productsMap[id];
 
@@ -27,32 +35,3 @@ export default class Products {
         return  this.items[index];
     }
 };
-// server api
-function getProducts(){
-    return [
-        {
-            id: 1,
-            title: 'Iphon 200',
-            price: 12000,
-            rest: 10
-        },
-        {
-            id: 2,
-            title: 'Samsung 200',
-            price: 22000,
-            rest: 10
-        },
-        {
-            id: 101,
-            title: 'Huavey 300',
-            price: 32000,
-            rest: 10
-        },
-        {
-            id: 102,
-            title: 'Nokia 3110',
-            price: 32000,
-            rest: 10
-        }
-    ]
-} 
