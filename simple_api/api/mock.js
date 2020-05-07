@@ -237,6 +237,7 @@ const normalizedRestaurants = [
         rest:8
       }]
   
+
   module.exports = {
     dishes: normalizedDishes,
     restaurants: normalizedRestaurants,

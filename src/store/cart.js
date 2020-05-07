@@ -2,15 +2,30 @@ import {observable, computed, action } from 'mobx';
 
 export default class Cart {
     @observable products = [];
-
+   
     constructor(rootStore){
         this.rootSote = rootStore;
+        this.api = this.rootSote.api.cart;
+        this.storage = this.rootSote.storage;
+        this.token = this.storage.getItem('cartToken');
     }
 
     @computed get productsDetailed() {
         return this.products.map((pr) => {
             let product = this.rootSote.products.getById(pr.id);
             return {...product, cnt: pr.cnt };
+        });
+    }
+
+    @action load(){
+        this.api.load(this.token).then((data) => {
+            console.log(data);
+            this.products = data.cart;
+
+            if(data.needUpdate){
+                this.token = data.token;
+                this.storage.setItem('cartToken', this.token);
+            }
         });
     }
 

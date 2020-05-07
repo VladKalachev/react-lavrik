@@ -3,13 +3,16 @@ import orderStore from './order';
 import productsStore from './products';
 
 import * as products from '~/api/products';
-
+import * as cart from '~/api/cart';
 class RootStore {
     constructor(){
         this.api = {
-            products
+            products,
+            cart
         };
-        
+
+        this.storage = localStorage;
+
         this.cart = new cartStore(this);
         this.order = new orderStore(this);
         this.products = new productsStore(this);

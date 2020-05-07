@@ -4,10 +4,11 @@ import App from './app';
 import stores from '~s';
 import {Provider} from 'mobx-react';
 
-stores.products.load();
-
-ReactDom.render(
-    <Provider stores={stores}>
+stores.products.load().then(() => {
+    ReactDom.render(<Provider stores={stores}>
         <App/>
     </Provider>
-, document.querySelector("#app"));
+    , document.querySelector("#app"));
+});
+
+stores.cart.load();

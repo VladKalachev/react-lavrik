@@ -20,9 +20,11 @@ export default class Products {
     }
 
     @action load(){
-        console.log(this.api)
-        this.api.all().then((data) => {
-            this.items = data;
+       return new Promise((resolve, reject) => {
+            this.api.all().then((data) => {
+                this.items = data;
+                resolve(true);
+            });
         });
     }
 
