@@ -1,53 +1,33 @@
 import {observable, computed, action } from 'mobx';
+import productsStore from './products';
 
 class Cart {
-    @observable products = getProducts();
+    @observable products = [{id: 101, cnt: 2}];
 
     @computed get total() {
-        return this.products.reduce((t, pr) => t + pr.price * pr.current, 0);
+        return this.products.reduce((t, pr) => {
+            let product = productsStore.getById(pr.id);
+            return t + product.price * pr.cnt;
+        }, 0);
     }
 
-    // мемоизация
-    @computed get changeOn() {
-        return this.products.map((product, i) => {
-            return (cnt) => this.change(i, cnt);
-        })
+    @action add(id) {
+        this.products.push({id, cnt: 1});
     }
 
-    @action change(i, cnt){
-        this.products[i].current = cnt;
+    @action change(id, cnt) {
+        let index = this.products.findIndex((pr) => pr.id === id );
+        if(index !== -1 ){
+            this.products[index].cnt = cnt;
+        }
     }
 
-    @action remove(i){
-        this.products.splice(i, 1);
+    @action remove(id) {
+        let index = this.products.findIndex((pr) => pr.id === id );
+        if(index !== -1 ){
+            this.products.splice(i, 1);
+        }
     }
 }
-
-// server api
-function getProducts() {
-    return [
-        {
-            id: 1,
-            title: 'Iphon 200',
-            price: 12000,
-            rest: 10,
-            current: 1
-        },
-        {
-            id: 2,
-            title: 'Samsung 200',
-            price: 22000,
-            rest: 10,
-            current: 1
-        },
-        {
-            id: 3,
-            title: 'Huavey 300',
-            price: 32000,
-            rest: 10,
-            current: 1
-        }
-    ]
-} 
 
 export default new Cart();
