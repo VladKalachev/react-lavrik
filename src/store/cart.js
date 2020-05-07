@@ -18,6 +18,10 @@ export default class Cart {
         return (id) => this.products.some((product) => product.id === id);
     }
 
+    @computed get cartCnt(){
+        return this.products.length;
+    }
+
     @computed get total() {
         return this.productsDetailed.reduce((t, pr) => {
             return t + pr.price * pr.cnt;

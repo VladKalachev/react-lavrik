@@ -1,15 +1,15 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
-// import styles from './app.module.css';
+import {BrowserRouter as Router, Route, Switch, NavLink} from 'react-router-dom';
+import styles from './app.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import routesMap from '~/routes/routesMap';
-import {observer, Provider} from 'mobx-react';
+import withStore from '~/hocs/withStore';
 import routes from '~/routes';
-import stores from '~s';
-
-@observer class App extends React.Component {
+class App extends React.Component {
    
     render(){
+
+        let cart = this.props.stores.cart;
 
         let routesComponents = routes.map((route) => {
             return <Route key={route.url} 
@@ -20,22 +20,43 @@ import stores from '~s';
         });
 
         return(
-            <Provider stores={stores}>
                   <Router>
+                    <header>
+                        <div className="container">
+                            <hr/>
+                            <div className="row justify-content-between">
+                                <div className="col col-4">
+                                    <div className="alert alert-success">Site name</div>
+                                </div>
+                                <div className="col col-3">
+                                    <strong>
+                                        In Cart: {cart.cartCnt}
+                                        <br/>
+                                        Total: {cart.total}
+                                    </strong>
+                                </div>
+                            </div>
+                            <hr/>
+                        </div>
+                    </header>
                     <div className="container">
-                        header
-                        <hr />
                         <div className="row">
                             <div className="col col-3">
                                 <ul className="list-group">
                                     <li className="list-group-item">
-                                        <Link to={routesMap.home}>Home</Link>
+                                        <NavLink to={routesMap.home} exact activeClassName={styles.active}>
+                                            Home
+                                        </NavLink>
                                     </li>
                                     <li className="list-group-item">
-                                        <Link to={routesMap.cart}>Cart</Link>
+                                        <NavLink to={routesMap.cart} activeClassName={styles.active}>
+                                            Cart
+                                        </NavLink>
                                     </li>
                                     <li className="list-group-item">
-                                        <Link to={routesMap.order}>Order now</Link>
+                                        <NavLink to={routesMap.order} activeClassName={styles.active}>
+                                            Order now
+                                        </NavLink>
                                     </li>
                                 </ul>
                             </div>
@@ -48,10 +69,8 @@ import stores from '~s';
                     
                     </div>
                 </Router>
-            </Provider>
-          
         ) 
     }
 };
 
-export default App;
+export default withStore(App);
