@@ -10,19 +10,19 @@ import routesMap from '~/routes/routesMap';
      
     render() {
   
-        let productsRows = cartModal.products.map((product, i) => {
+        let productsRows = cartModal.productsDetailed.map((product, i) => {
           
             return(
                 <tr key={product.id}>
-                    <td>1</td>
-                    <td>2</td>
+                    <td>{product.title}</td>
+                    <td>{product.price}</td>
                     <td>
                         <AppMinMax min={1} 
-                                   max={5} 
+                                   max={product.rest} 
                                    cnt={product.cnt}
                                    onChange={(cnt) =>  cartModal.change(product.id, cnt)} />
                     </td>
-                    <td>{1 * product.current}</td>
+                    <td>{product.price * product.cnt}</td>
                     <td>
                         <button onClick={() => cartModal.remove(product.id)}>
                             X
