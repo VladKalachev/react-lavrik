@@ -20,7 +20,8 @@ class Cart extends React.Component {
                         <AppMinMax min={1} 
                                    max={product.rest} 
                                    cnt={product.cnt}
-                                   onChange={(cnt) =>  cartModal.change(product.id, cnt)} />
+                                   onChange={(cnt) =>  cartModal.change(product.id, cnt)}
+                                   disabled={product.id in cartModal.processId} />
                     </td>
                     <td>{product.price * product.cnt}</td>
                     <td>

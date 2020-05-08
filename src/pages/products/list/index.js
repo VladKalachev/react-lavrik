@@ -13,11 +13,19 @@ export default inject('stores')(observer(function(props) {
         let btn;
 
         if(cart.inCart(product.id)){
-            btn = <Button variant="danger" onClick={() => cart.remove(product.id)}>
+            btn = <Button 
+                        variant="danger"
+                        onClick={() => cart.remove(product.id)}
+                        disabled={product.id in cart.processId} 
+                    >
             Remove from cart
         </Button>
         } else {
-            btn = <Button variant="success" onClick={() => cart.add(product.id)}>
+            btn = <Button 
+                    variant="success" 
+                    disabled={product.id in cart.processId} 
+                    onClick={() => cart.add(product.id)}
+                >
             Add to cart
         </Button>
         }
@@ -35,7 +43,7 @@ export default inject('stores')(observer(function(props) {
                         Get more...
                     </Link>
                     <hr/>
-                   {btn}
+                    {btn}
                 </Card.Body>
             </Card>
         </div>;

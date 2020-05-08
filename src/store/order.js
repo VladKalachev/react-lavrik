@@ -1,6 +1,7 @@
 import {observable, computed, action } from 'mobx';
 
 export default class Order {
+
     @observable formData = {
         name: { 
             label: 'Your Name',
@@ -55,13 +56,18 @@ export default class Order {
     }
 
     @action send(){
-        this.lastOrderCache.total = this.rootStore.cart.total;
+        return new Promise((resolve, reject) => {
+            // запрос к api
+            this.rootStore.cart.clean().then(() => {
+                this.lastOrderCache.total = this.rootStore.cart.total;
 
-        for(let key in this.formData){
-            this.lastOrderCache[key] = this.formData[key].value;
-        }
-        // запрос к api
-        this.rootStore.cart.clean();
+                for(let key in this.formData){
+                    this.lastOrderCache[key] = this.formData[key].value;
+                }
+                resolve();
+            });
+        })
+        
     }
 
 };

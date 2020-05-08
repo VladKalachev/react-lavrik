@@ -1,10 +1,10 @@
 import React from 'react';
 import {Form, Button, Modal} from 'react-bootstrap';
 import {observer, inject} from 'mobx-react';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from 'react-router-dom';
 import routesMap from '~/routes/routesMap';
+
 @inject('stores') @observer class Order extends React.Component {
     state = {
         showModal: false
@@ -19,9 +19,10 @@ import routesMap from '~/routes/routesMap';
     }
 
     confirm = () => {
-        this.props.stores.order.send();
-        this.hide();
-        this.props.history.push(routesMap.result);
+        this.props.stores.order.send().then(() => {
+            this.hide();
+            this.props.history.push(routesMap.result);
+        });
     }
     
     render() {

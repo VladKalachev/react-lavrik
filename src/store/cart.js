@@ -1,7 +1,8 @@
 import {observable, computed, action } from 'mobx';
 
-export default class Cart {
+export default class {
     @observable products = [];
+    @observable processId = {};
    
     constructor(rootStore){
         this.rootSote = rootStore;
@@ -44,40 +45,58 @@ export default class Cart {
     }
 
     @action add(id) {
-        this.api.add(this.token, id).then((res) => {
-            if(res){
-                this.products.push({id, cnt: 1});
-            }
-        });
+        
+        if(!(this.inCart(id) && id in this.processId)) {
+            this.processId[id] = true;
+            this.api.add(this.token, id).then((res) => {
+                if(res){
+                    this.products.push({id, cnt: 1});
+                    delete this.processId[id];
+                }
+            });
+        }
     }
 
     @action change(id, cnt){
-        let index = this.products.findIndex((pr) => pr.id === id );
-        if(index !== -1 ){
-            this.api.changeCnt(this.token, id, cnt).then((res) => {
-                if(res){
-                    this.products[index].cnt = cnt;
-                }
-            })
+        if(!(id in this.processId)){
+            let index = this.products.findIndex((pr) => pr.id === id );
+            if(index !== -1 ){
+                this.processId[id] = true;
+                this.api.changeCnt(this.token, id, cnt).then((res) => {
+                    if(res){
+                        this.products[index].cnt = cnt;
+                        delete this.processId[id];
+                    }
+                })
+            }
         }
     }
 
     @action remove(id){
-        let index = this.products.findIndex((pr) => pr.id === id );
-        if(index !== -1 ){
-            this.api.remove(this.token, id).then((res) => {
-                if(res){
-                    this.products.splice(index, 1);
-                }
-            })
+        if(this.inCart(id) && !(id in this.processId)) {
+            let index = this.products.findIndex((pr) => pr.id === id );
+            if(index !== -1 ){
+                this.processId[id] = true;
+                this.api.remove(this.token, id).then((res) => {
+                    if(res){
+                        this.products.splice(index, 1);
+                        delete this.processId[id];
+                    }
+                })
+            }
         }
     }
 
     @action clean(){
         this.api.clean(this.token).then((res) => {
-            if(res){
-                this.products = [];
-            }
+            return new Promise((resolve, reject) => {
+                if(res){
+                    this.products = [];
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
         });
     }
 };

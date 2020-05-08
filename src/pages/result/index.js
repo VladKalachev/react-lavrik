@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {urlBuilder} from '~/routes/routesMap';
+// import {Link} from 'react-router-dom';
+// import {urlBuilder} from '~/routes/routesMap';
 import withStore from '~/hocs/withStore';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
