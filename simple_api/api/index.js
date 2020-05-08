@@ -1,6 +1,6 @@
 let router = require("express").Router();
 let mocks = require("./mock");
-let mocksCart = require("./cart-mock");
+// let mocksCart = require("./cart-mock");
 
 let cart = [];
 
@@ -12,9 +12,6 @@ const reply = (res, body, timeout = 1000, status = 200) =>
 router.get("/restaurants", function(req, res, next) {
   reply(res, mocks.restaurants);
 });
-
-
-
 
 /**
  * Get all products
@@ -29,7 +26,7 @@ router.get("/products/all", function(req, res, next) {
 
 // get
 router.get("/cart/load", function(req, res, next) {
-  console.log('cart/load', req.query.token)
+  // console.log('cart/load', req.query.token)
   let response = {
     cart: [],
     needUpdate: false,
@@ -51,28 +48,42 @@ router.get("/cart/load", function(req, res, next) {
 
 // post
 router.get("/cart/add", function(req, res, next) {
- 
-  console.log(req.query.id);
-  if(req.query.token && req.query.id){
-    cart.push({id: req.query.id, cnt: 1})
+  let id = req.query.id;
+  let token = req.query.token;
+  if(token && id){
+    cart.push({id: id, cnt: 1})
     res.send(true);
   }
   
 });
 
 // puth
-router.put("/cart/change", function(req, res, next) {
-  res.send('change to cart')
+router.get("/cart/change", function(req, res, next) {
+  //res.send('change to cart')
+  let id = req.query.id;
+  let token = req.query.token;
+  let cnt = req.query.cnt;
+  reply(res, true);
 });
 
 // delete
 router.get("/cart/remove", function(req, res, next) {
-  
-  if(req.query.token && req.query.id){
-    cart.filter((res) => res.id !== req.query.id);
-    res.send(true);
+  let id = req.query.id;
+  let token = req.query.token;
+  if(token && id){
+    // res.send(true);
+    reply(res, true);
   }
 });
+
+// clean
+router.get("cart/clean", function(req, res, next) {
+  let token = req.query.token;
+  if(token){
+    // res.send(true);
+    reply(res, true);
+  }
+})
 
 
 router.get("/dishes", function(req, res, next) {

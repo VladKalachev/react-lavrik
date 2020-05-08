@@ -10,7 +10,7 @@ export default class Cart {
         this.token = this.storage.getItem('cartToken');
     }
 
-    @computed get productsDetailed() {
+    @computed get productsDetailed(){
         return this.products.map((pr) => {
             let product = this.rootSote.products.getById(pr.id);
             return {...product, cnt: pr.cnt };
@@ -37,7 +37,7 @@ export default class Cart {
         return this.products.length;
     }
 
-    @computed get total() {
+    @computed get total(){
         return this.productsDetailed.reduce((t, pr) => {
             return t + pr.price * pr.cnt;
         }, 0);
@@ -49,17 +49,20 @@ export default class Cart {
                 this.products.push({id, cnt: 1});
             }
         });
-       
     }
 
-    @action change(id, cnt) {
+    @action change(id, cnt){
         let index = this.products.findIndex((pr) => pr.id === id );
         if(index !== -1 ){
-            this.products[index].cnt = cnt;
+            this.api.changeCnt(this.token, id, cnt).then((res) => {
+                if(res){
+                    this.products[index].cnt = cnt;
+                }
+            })
         }
     }
 
-    @action remove(id) {
+    @action remove(id){
         let index = this.products.findIndex((pr) => pr.id === id );
         if(index !== -1 ){
             this.api.remove(this.token, id).then((res) => {
@@ -68,5 +71,13 @@ export default class Cart {
                 }
             })
         }
+    }
+
+    @action clean(){
+        this.api.clean(this.token).then((res) => {
+            if(res){
+                this.products = [];
+            }
+        });
     }
 };

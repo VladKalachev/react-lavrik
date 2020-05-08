@@ -1,29 +1,31 @@
 import React from 'react';
-import {observer} from 'mobx-react';
-import cartModal from '~s/cart';
-import orderModal from '~s/order';
 import {Link} from 'react-router-dom';
 import {urlBuilder} from '~/routes/routesMap';
+import withStore from '~/hocs/withStore';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default @observer class extends React.Component {
+class Result extends React.Component {
 
     render() {
-        let postsTmp = [1,2,3];
-        let links = postsTmp.map(post => {
-            return <div key={post}>
-                <Link to={urlBuilder('blogPost', {url: post})}>Post {post}</Link>
-            </div>
-        });
+        let data = this.props.stores.order.lastOrderCache;
+        let cartModal = this.props.stores.cart;
+        // let postsTmp = [1,2,3];
+        // let links = postsTmp.map(post => {
+        //     return <div key={post}>
+        //         <Link to={urlBuilder('blogPost', {url: post})}>Post {post}</Link>
+        //     </div>
+        // });
         return(
             <div>
                 <h2>Congratulations!</h2>
-                <p>Hi, {orderModal.data.name}!</p>
-                <p><strong>Total: {cartModal.total}</strong></p>
+                <p>Hi, {data.name}!</p>
+                <p><strong>Total: {data.total}</strong></p>
                 <div>
-                    {links}
+                    {/* {links} */}
                 </div>
             </div>
         ) 
     }
 };
+
+export default withStore(Result);

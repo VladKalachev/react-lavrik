@@ -19,6 +19,7 @@ import routesMap from '~/routes/routesMap';
     }
 
     confirm = () => {
+        this.props.stores.order.send();
         this.hide();
         this.props.history.push(routesMap.result);
     }

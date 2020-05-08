@@ -25,8 +25,15 @@ export default class Order {
         }
     };
 
+    @observable lastOrderCache = {
+        name: '',
+        email: '',
+        phone: '',
+        total: ''
+    }
+
     constructor(rootStore){
-        this.rootSote = rootStore;
+        this.rootStore = rootStore;
     }
 
     @computed get formValid(){
@@ -45,6 +52,16 @@ export default class Order {
         let field = this.formData[key];
         field.value = value;
         field.valid = field.validator(field.value);
+    }
+
+    @action send(){
+        this.lastOrderCache.total = this.rootStore.cart.total;
+
+        for(let key in this.formData){
+            this.lastOrderCache[key] = this.formData[key].value;
+        }
+        // запрос к api
+        this.rootStore.cart.clean();
     }
 
 };
