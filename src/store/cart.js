@@ -3,7 +3,7 @@ import {observable, computed, action, runInAction } from 'mobx';
 export default class {
     @observable products = [];
     @observable processId = {};
-   
+
     constructor(rootStore){
         this.rootStore = rootStore;
         this.api = this.rootStore.api.cart;
