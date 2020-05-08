@@ -1,25 +1,13 @@
-.active_6cc4b3e{
-    color: blue;
-}
-.input_569093f {
-    width: 50px;
-}
-.col_bb9b535{
-    margin-top: 30px;
-}
-
-.redd_0589377{
-    color: red;
-}
-.box_9f3543b {
+.box {
     position: fixed;
     right: 0;
     top: 0;
     width: 300px;
-    z-index: 1000;
+    z-index: 10000;
     padding: 10px 10px 0 0;
 }
-.item_4c42bd8 {
+
+.item {
     margin: 0 0 10px 0;
     background: #444;
     color: #fff;

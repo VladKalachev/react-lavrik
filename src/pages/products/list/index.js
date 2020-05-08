@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import styles from './index.module.css';
 import {observer, inject} from 'mobx-react';
 
+console.log(styles)
 export default inject('stores')(observer(function(props) {
     
     let productModel = props.stores.products;

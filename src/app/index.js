@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import routesMap from '~/routes/routesMap';
 import withStore from '~/hocs/withStore';
 import routes from '~/routes';
+import Notifications from '~p/notifications';
 class App extends React.Component {
    
     render(){
@@ -12,15 +13,17 @@ class App extends React.Component {
         let cart = this.props.stores.cart;
 
         let routesComponents = routes.map((route) => {
-            return <Route key={route.url} 
-                          path={route.url}
-                          component={route.component}
-                          exact={route.exact}
+            return <Route 
+                        key={route.url} 
+                        path={route.url}
+                        component={route.component}
+                        exact={route.exact}
                     />;
         });
 
         return(
-                  <Router>
+                <Router>
+                    <Notifications />
                     <header>
                         <div className="container">
                             <hr/>

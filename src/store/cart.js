@@ -5,15 +5,15 @@ export default class {
     @observable processId = {};
    
     constructor(rootStore){
-        this.rootSote = rootStore;
-        this.api = this.rootSote.api.cart;
-        this.storage = this.rootSote.storage;
+        this.rootStore = rootStore;
+        this.api = this.rootStore.api.cart;
+        this.storage = this.rootStore.storage;
         this.token = this.storage.getItem('cartToken');
     }
 
     @computed get productsDetailed(){
         return this.products.map((pr) => {
-            let product = this.rootSote.products.getById(pr.id);
+            let product = this.rootStore.products.getById(pr.id);
             return {...product, cnt: pr.cnt };
         });
     }
@@ -51,8 +51,11 @@ export default class {
             this.api.add(this.token, id).then((res) => {
                 if(res){
                     this.products.push({id, cnt: 1});
-                    delete this.processId[id];
                 }
+            }).catch(() => {
+                this.rootStore.notifications.add("Can't add item in cart! Try again!");
+            }).finally(() => {
+                delete this.processId[id];
             });
         }
     }
