@@ -7,7 +7,7 @@ import withStore from '~/hocs/withStore';
 import routes from '~/routes';
 import Notifications from '~p/notifications';
 class App extends React.Component {
-   
+
     render(){
 
         let cart = this.props.stores.cart;
@@ -69,10 +69,9 @@ class App extends React.Component {
                                 </Switch>
                             </div>
                         </div>
-                    
                     </div>
                 </Router>
-        ) 
+        )
     }
 };
 
