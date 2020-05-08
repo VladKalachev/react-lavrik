@@ -5,12 +5,12 @@ let conf = {
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, './dist/'),
-        filename: 'main.js',
+        filename: '[name].js',
         publicPath: 'dist/'
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'style.css'
+        filename: '[name].css'
       }),
     ],
     module: {
@@ -82,7 +82,26 @@ let conf = {
             changeOrigin: true
           }
         }
-      }
+      },
+      optimization: {
+        splitChunks: {
+          cacheGroups: {
+            vendors: {
+              name: 'chunk-vendors',
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10,
+              chunks: 'initial'
+            },
+            common: {
+              name: 'chunck-common',
+              minChunks: 2,
+              priority: -20,
+              chunks: 'initial',
+              reuseExistingChunk: true
+            }
+          }
+        }
+      }    
 };
 
 module.exports = conf;
